@@ -86,6 +86,26 @@ All numbers are from the paper and `results_tables.md`.
 | [`2_contractbench/`](2_contractbench) | ContractBench: the released benchmark. |
 | [`3_contractgate/`](3_contractgate) | ContractGate: the released scorer. |
 
+## References
+
+References cited in the paper.
+
+1. Jimenez et al. SWE-bench: Can language models resolve real-world GitHub issues? ICLR 2024.
+2. Ouyang et al. RepoGraph: Enhancing AI software engineering with repository-level code graph. ICLR 2025.
+3. Tao et al. Code Graph Model (CGM): a graph-integrated LLM for repository-level software engineering tasks. NeurIPS 2025.
+4. Su et al. Software World Models: from consequence prediction to decision value. arXiv:2610.04940, 2026.
+5. Pu, Tang, Zhang. COUNTERMEM: world-model verified counter-factual memory for language agents. arXiv:2609.31874, 2026.
+6. Zhou et al. A unified issue resolution benchmark for requirement clarification, planning, and code generation (SWE-RPG). arXiv:2608.09072, 2026.
+7. Ma et al. SWE-Proof: can language models resolve real-world issues with machine-checked proofs? arXiv:2609.21190, 2026.
+8. Wei et al. Toward training superintelligent software agents through self-play SWE-RL. ICML 2026 (PMLR 306).
+9. Choi et al. Anchored self-play for code repair. ICML 2026 (PMLR 306).
+10. Ma et al. Scaling agentic verifier for competitive coding. ICML 2026 (PMLR 306).
+11. Hu et al. LoRA: low-rank adaptation of large language models. ICLR 2022.
+12. Rafailov et al. Direct preference optimization. NeurIPS 2023.
+13. Shao et al. DeepSeekMath (introduces GRPO). arXiv:2402.03300, 2024.
+14. Kwon et al. Efficient memory management for LLM serving with PagedAttention (vLLM). SOSP 2023.
+15. Google DeepMind. Gemma 4 technical report. arXiv:2607.02770, 2026.
+
 ## Citation and license
 
 Code and the notebook are released under the [Apache License 2.0](LICENSE) with third-party notices. Cite using [`CITATION.cff`](CITATION.cff).
