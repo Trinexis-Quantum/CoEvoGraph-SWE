@@ -41,21 +41,25 @@ Repair benchmarks show one repository state and ask whether a patch passes. Here
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    A[Development knowledge graph<br/>provenance-scoped] --> C
-    B[External documentation<br/>version-gated] --> C
-    C[Gemma 4 agent<br/>SEARCH / VIEW tool loop] --> D[Candidate patch]
-    D --> E[C³-GWM<br/>contract-conditioned world model]
-    D --> F[Protected execution<br/>and verifier]
-    F --> G[(Evidence ledger)]
-    G --> H[Witness memory]
-    G --> I[Verified SFT]
-    G --> J[Execution-rewarded RL]
-    H --> C
-    I --> C
-    J --> C
-```
+<div align="center">
+
+<img src="assets/architecture.png" alt="Reference architecture" width="760">
+
+</div>
+
+*Reference architecture. Blue boxes are deterministic components, purple boxes are learned or LLM components, green boxes are records and verdicts.*
+
+An issue and a base commit enter the evidence layer. Git history, syntax trees, dated decision records and tests populate a time-versioned graph, and retrieval returns only records valid at the task date, with superseded records flagged. The Gemma 4 agent reads that evidence pack through SEARCH and VIEW tools and proposes a SEARCH/REPLACE edit. The edit runs in a sandbox on a pristine checkout, and trusted oracle files are overlaid after the patch. A world model predicts, before execution, whether the patch will satisfy the contract in force. Verified outcomes feed witness memory, adapter training and the world model, and held-out families never enter any of them.
+
+| Layer | Role | Code |
+|:-|:-|:-|
+| Evidence | Time-versioned graph, time-valid retrieval, offline documentation gate | `coevo/kg.py`, `retrieval.py`, `extdocs.py` |
+| Agent | Gemma 4 12B, tool loop, SEARCH/REPLACE edit format | `coevo/agent.py` |
+| Verifier | Fresh checkout, oracle overlay, resource limits | `coevo/tasks.py`, `sandbox.py` |
+| World model | C³-GWM predicts patch success before execution | `coevo/worldmodel*.py`, `wm_eval.py` |
+| Learning | Verified-witness memory, LoRA SFT, execution-rewarded RL | `coevo/b10.py`, `train.py`, `pipeline_*.py` |
+
+The reference architecture also contains a Builder/Challenger escalation path. Its modules ship in the repository (`coevo/dual.py`, `probes.py`, `controller.py`), and the notebook concentrates on the layers in the table.
 
 Evaluation uses **Paired Temporal-Contract Interventions**: a pair counts only when both the historical and the revised version of a requirement are repaired correctly, scored by the Paired Contract Success Rate (PCSR). Serving, verification, world-model fitting and LoRA training all run on a single DGX Spark (Gemma 4 12B-it, vLLM, FP8 weights and FP8 KV cache, NVIDIA GB10).
 
