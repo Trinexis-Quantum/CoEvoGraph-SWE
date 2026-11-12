@@ -50,12 +50,17 @@ flowchart LR
 
 ## A glimpse of the results
 
-| | |
+Highlights from the paper, all measured on one NVIDIA DGX Spark with Gemma 4 12B.
+
+| What we asked | What we found |
 |---|---|
-| **Right rule, right fix** | Success on paired contract tasks rises from **0.11** to **0.74** when the agent sees time-valid evidence instead of a time-agnostic index. |
-| **Predict before you run** | The world model roughly doubles the ability to spot a correct patch before any test executes. |
-| **Learns on-device** | Fine-tuning on verified edits lifts strict pass@1 from **0.61** to **0.86** and cuts rollout time from about 115 s to 20 s. |
-| **One box** | Serving, verification, modelling and training all run on one DGX Spark. |
+| **Does knowing *when* a rule applied help?** | Paired contract success jumps from **0.11 to 0.74** on unseen task families once the agent sees time-valid evidence rather than a time-agnostic index. |
+| **Is the agent really reading the dates?** | Flip the validity flags and success collapses back to **0.11** while patches stay well formed. It acts on what it is shown. |
+| **Can we tell a good patch before running it?** | The contract-aware world model nearly **doubles** precision at spotting correct patches (**0.22 to 0.41**), and a shuffled-contract control drops back to 0.13. |
+| **Does verified memory help?** | Reusing verified fixes lifts the revised-contract resolve rate from **0.85 to 0.91**. |
+| **Can it learn on the same machine?** | Fine-tuning on verified edits lifts strict pass@1 from **0.61 to 0.86** and shrinks a rollout from about **115 s to 20 s**. |
+| **Does learning from execution add more?** | One round of execution-rewarded reinforcement learning adds **+0.28** paired success over the preceding checkpoint. |
+| **Is it practical?** | FP8 serving decodes **1.9x faster** than bf16 (861 vs 452 tokens/s). Everything runs on one box. |
 
 Full tables, controls and confidence intervals are in [`results_tables.md`](1_paper_and_notebook/results_tables.md).
 
